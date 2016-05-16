@@ -1,4 +1,3 @@
-Library/
 Assembly-CSharp-Editor-vs.csproj
 Assembly-CSharp-Editor.csproj
 Assembly-CSharp-firstpass-vs.csproj
@@ -7,10 +6,22 @@ Assembly-CSharp-vs.csproj
 Assembly-CSharp.csproj
 Assembly-UnityScript-vs.unityproj
 Assembly-UnityScript.unityproj
-Temp/
 RobotGame-csharp.sln
 RobotGame.CSharp.Editor.csproj
 RobotGame.CSharp.Plugins.csproj
 RobotGame.CSharp.csproj
 RobotGame.sln
 RobotGame.userprefs
+obj/
+Library/
+Temp/
+Assets/Temp/
+Assets/Temp.meta
+Assets/RobotGame/Models/
+Assets/RobotGame/Models.meta
+Assets/RobotGame/Textures/
+Assets/RobotGame/Textures.meta
+Assets/FireExplosionVFX/
+Assets/Fx Explosion Pack/
+Assets/KTK Effect Samples/
+Assets/Standard Assets/
