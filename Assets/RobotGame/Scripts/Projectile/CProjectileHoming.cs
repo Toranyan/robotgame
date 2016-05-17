@@ -26,6 +26,8 @@ namespace game.projectile {
 			if(target != null) {
 				Target = target;
 				m_homing = true;
+			} else {
+				m_homing = false;
 			}
 		}
 

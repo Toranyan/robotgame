@@ -8,19 +8,21 @@ namespace game.weapon {
 	public class CWeaponMissileLauncher : CWeaponBase {
 
 
-		protected override Vector3 CalcProjInitialVelo (Vector3 vecTargetDelta) {
+		protected override void SetProjInitialVelo (CProjectileBase proj, Vector3 vecTargetDelta) {
 
 			Vector3 vecSpread = Random.insideUnitSphere;
 			Vector3 vecInitVelo = vecSpread;
 
 			if(m_spawnPoint != null) {
-				vecInitVelo += m_spawnPoint.rotation * Vector3.forward;
+				vecInitVelo = vecInitVelo * 0.3f + (m_spawnPoint.rotation * Vector3.forward);
 			}
 
-			vecInitVelo *= m_muzzleVelocity;
-			//proj.Velocity = (vecTarget + vecSpread) * m_muzzleVelocity;
+			vecInitVelo = vecInitVelo.normalized * m_muzzleVelocity;
 
-			return vecInitVelo;
+			//also set rotation
+			proj.transform.rotation = Quaternion.LookRotation(vecInitVelo);
+
+			proj.Velocity = vecInitVelo;
 		}
 	}
 

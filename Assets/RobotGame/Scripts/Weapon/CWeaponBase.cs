@@ -98,38 +98,38 @@ namespace game.weapon {
 			//place on pos
 			//with rotation
 			Vector3 spawnPos = transform.position;
-			Quaternion rot = transform.rotation;
+			Quaternion spawnRot = transform.rotation;
 			if(m_spawnPoint != null) {
 				spawnPos = m_spawnPoint.position;
-				rot = m_spawnPoint.rotation;
+				spawnRot = m_spawnPoint.rotation;
 			}
 			newProj.transform.position = spawnPos;
-			newProj.transform.rotation = rot;
+			newProj.transform.rotation = spawnRot;
 
 			//set collision
 			Physics.IgnoreCollision(newProj.Collider, m_owner.Collider);
 			newProj.Collider.gameObject.layer = m_projectileLayer;
 
 			//set target
-			Vector3 vecTarget = rot * Vector3.forward; //default velo is forward
+			Vector3 vecTarget = spawnRot * Vector3.forward; //default velo is forward
 			if(Target != null) {
 				vecTarget = Target.transform.position - spawnPos;
-
-				//newProj.Target = Target;
-				newProj.Setup(Target);
+			} else {
+				
 			}
+			newProj.Setup(Target);
 
 			//overridden on some weapons
-			newProj.Velocity = CalcProjInitialVelo(vecTarget);
+			SetProjInitialVelo(newProj, vecTarget);
 
 			m_timeElapsedLastSpawn = 0;
 
 			return newProj;
 		}
 
-		protected virtual Vector3 CalcProjInitialVelo(Vector3 vecTargetDelta) {
+		protected virtual void SetProjInitialVelo(CProjectileBase proj, Vector3 vecTargetDelta) {
 			//simple towards target
-			return vecTargetDelta.normalized * m_muzzleVelocity;
+			proj.Velocity = vecTargetDelta.normalized * m_muzzleVelocity;
 		}
 
 
