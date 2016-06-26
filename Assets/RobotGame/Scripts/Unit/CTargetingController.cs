@@ -4,6 +4,10 @@ using System.Collections;
 
 namespace game.unit {
 
+	/// <summary>
+	/// C targeting controller.
+	/// Controller attached to a unit
+	/// </summary>
 	public class CTargetingController : MonoBehaviour {
 
 		[SerializeField]
@@ -41,7 +45,7 @@ namespace game.unit {
 
 			foreach(Collider col in colliders) {
 
-				IssDestructible dest = col.GetComponent<IssDestructible>();
+				IDestructible dest = col.GetComponent<IDestructible>();
 
 				if(dest != null) {
 

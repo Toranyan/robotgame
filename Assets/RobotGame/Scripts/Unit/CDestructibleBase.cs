@@ -3,7 +3,7 @@ using System.Collections;
 
 namespace game.unit {
 
-	public class CDestructibleBase : MonoBehaviour, IssDestructible {
+	public class CDestructibleBase : MonoBehaviour, IDestructible {
 
 		/****************************************
 		 * Inspector Fields

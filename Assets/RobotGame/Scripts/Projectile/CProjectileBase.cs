@@ -111,7 +111,7 @@ namespace game.projectile {
 			Initialized = true;
 		}
 
-		public virtual void Setup(GameObject target) {
+		public virtual void SetTarget(GameObject target) {
 			Target = target;
 		}
 
@@ -157,7 +157,7 @@ namespace game.projectile {
 
 		public void OnCollisionEnter(Collision collision) {
 			//check if other thing is destructible
-			IssDestructible dest = collision.gameObject.GetComponent<IssDestructible>();
+			IDestructible dest = collision.gameObject.GetComponent<IDestructible>();
 
 			//deal damage
 			if(dest != null) {

@@ -35,6 +35,9 @@ namespace game.weapon {
 		[SerializeField]
 		protected int m_projectileLayer;
 
+		[SerializeField]
+		protected bool m_aimEnabled; //aim at the target
+
 
 
 		/****************************************
@@ -48,6 +51,7 @@ namespace game.weapon {
 		protected float m_fireReady;
 
 		protected GameObject m_target;
+		protected Vector3 m_targetPos;
 
 
 		/****************************************
@@ -57,6 +61,11 @@ namespace game.weapon {
 		public GameObject Target {
 			get { return m_target; }
 			set { m_target = value; }
+		}
+
+		public Vector3 TargetPos {
+			get { return m_targetPos; }
+			set { m_targetPos = value; }
 		}
 
 
@@ -110,17 +119,22 @@ namespace game.weapon {
 			Physics.IgnoreCollision(newProj.Collider, m_owner.Collider);
 			newProj.Collider.gameObject.layer = m_projectileLayer;
 
-			//set target
-			Vector3 vecTarget = spawnRot * Vector3.forward; //default velo is forward
-			if(Target != null) {
-				vecTarget = Target.transform.position - spawnPos;
-			} else {
-				
+			//set target vector
+			Vector3 vecTargetDelta = spawnRot * Vector3.forward; //default velo is forward
+			if(m_aimEnabled) {
+				if(Target != null) { //target object
+					vecTargetDelta = Target.transform.position - spawnPos;
+				} else {
+					//target vector
+					vecTargetDelta = m_targetPos - transform.position;
+				}
 			}
-			newProj.Setup(Target);
+
+			//set projectile target
+			newProj.SetTarget(Target);
 
 			//overridden on some weapons
-			SetProjInitialVelo(newProj, vecTarget);
+			SetProjInitialVelo(newProj, vecTargetDelta);
 
 			m_timeElapsedLastSpawn = 0;
 

@@ -3,7 +3,7 @@ using System.Collections;
 
 namespace game.unit {
 
-	public interface IssDestructible {
+	public interface IDestructible {
 
 		GameObject GameObject {
 			get;

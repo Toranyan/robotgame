@@ -67,6 +67,12 @@ namespace game.unit {
 
 		}
 
+		public void SetTargetVec(Vector3 vec) {
+			foreach(CWeaponBase wep in m_weapon) {
+				wep.TargetPos = vec;
+			}
+		}
+
 
 	}
 

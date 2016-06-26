@@ -21,8 +21,8 @@ namespace game.projectile {
 		}
 
 
-		public override void Setup(GameObject target) {
-			base.Setup(target);
+		public override void SetTarget(GameObject target) {
+			base.SetTarget(target);
 			if(target != null) {
 				Target = target;
 				m_homing = true;

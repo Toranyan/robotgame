@@ -18,6 +18,9 @@ namespace game.utiliy {
 		[SerializeField]
 		protected Vector3 m_spawnVector;
 
+		[SerializeField]
+		protected bool m_enabled;
+
 		/****************************************
 		 * Private Fields
 		 * **************************************/

@@ -4,7 +4,7 @@ using System.Collections;
 
 namespace game.unit {
 
-	public class CUnitBase : MonoBehaviour, IssDestructible {
+	public class CUnitBase : MonoBehaviour, IDestructible {
 
 		/****************************************
 		 * Inspector Fields
