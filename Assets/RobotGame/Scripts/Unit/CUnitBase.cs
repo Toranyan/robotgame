@@ -85,6 +85,11 @@ namespace game.unit {
 			set;
 		}
 
+		public virtual Vector3 TargetVec {
+			get;
+			protected set;
+		}
+
 
 		public float Speed {
 			get { return m_rigidbody.velocity.magnitude; }
@@ -152,6 +157,12 @@ namespace game.unit {
 			//m_rigidbody.AddTorque(m_vecRotForce * m_turnRate);
 
 		}
+
+
+		public virtual void SetTargetVec(Vector3 vec) {
+			
+		}
+
 
 	}
 

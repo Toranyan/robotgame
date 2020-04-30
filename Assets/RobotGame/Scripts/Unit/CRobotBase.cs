@@ -28,6 +28,12 @@ namespace game.unit {
 			get { return m_targetingController.CurrentTarget; }
 		}
 
+		/*
+		public override Vector3 TargetVec {
+			get;
+			protected set;
+		}*/
+
 		/****************************************
 		 * Public Methods
 		 * **************************************/
@@ -57,6 +63,7 @@ namespace game.unit {
 
 		}
 
+		//Targeting
 		public virtual void SelectClosestTarget() {
 
 			m_targetingController.SelectClosestTarget();
@@ -67,9 +74,11 @@ namespace game.unit {
 
 		}
 
-		public void SetTargetVec(Vector3 vec) {
+		public override void SetTargetVec(Vector3 vec) {
+			TargetVec = vec;
+			//Debug.Log(TargetVec);
 			foreach(CWeaponBase wep in m_weapon) {
-				wep.TargetPos = vec;
+				wep.TargetVec = vec;
 			}
 		}
 

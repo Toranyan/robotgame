@@ -51,7 +51,7 @@ namespace game.weapon {
 		protected float m_fireReady;
 
 		protected GameObject m_target;
-		protected Vector3 m_targetPos;
+		protected Vector3 m_targetVec;
 
 
 		/****************************************
@@ -63,9 +63,9 @@ namespace game.weapon {
 			set { m_target = value; }
 		}
 
-		public Vector3 TargetPos {
-			get { return m_targetPos; }
-			set { m_targetPos = value; }
+		public Vector3 TargetVec {
+			get { return m_targetVec; }
+			set { m_targetVec = value; }
 		}
 
 
@@ -104,31 +104,39 @@ namespace game.weapon {
 
 			CProjectileBase newProj = GameObject.Instantiate<CProjectileBase>(m_projectilePrefab);
 
-			//place on pos
-			//with rotation
-			Vector3 spawnPos = transform.position;
-			Quaternion spawnRot = transform.rotation;
-			if(m_spawnPoint != null) {
-				spawnPos = m_spawnPoint.position;
-				spawnRot = m_spawnPoint.rotation;
-			}
-			newProj.transform.position = spawnPos;
-			newProj.transform.rotation = spawnRot;
-
 			//set collision
 			Physics.IgnoreCollision(newProj.Collider, m_owner.Collider);
 			newProj.Collider.gameObject.layer = m_projectileLayer;
 
+			//place on pos
+			Vector3 spawnPos = transform.position;
+			if(m_spawnPoint != null) {
+				spawnPos = m_spawnPoint.position;
+			}
+			newProj.transform.position = spawnPos;
+
+
 			//set target vector
-			Vector3 vecTargetDelta = spawnRot * Vector3.forward; //default velo is forward
+			Vector3 vecTargetDelta = transform.rotation * Vector3.forward; //default velo is forward
 			if(m_aimEnabled) {
 				if(Target != null) { //target object
 					vecTargetDelta = Target.transform.position - spawnPos;
 				} else {
 					//target vector
-					vecTargetDelta = m_targetPos - transform.position;
+					//vecTargetDelta = m_targetVec - transform.position;
+					vecTargetDelta = m_spawnPoint.transform.rotation * Vector3.forward;
+				}
+			} else {
+				//use default
+				if(m_spawnPoint != null) {
+					vecTargetDelta = m_spawnPoint.transform.rotation * Vector3.forward;
 				}
 			}
+
+
+			//rotation
+
+
 
 			//set projectile target
 			newProj.SetTarget(Target);
@@ -141,9 +149,17 @@ namespace game.weapon {
 			return newProj;
 		}
 
+		/****************************************
+		 * Protected Methods
+		 * **************************************/
+
 		protected virtual void SetProjInitialVelo(CProjectileBase proj, Vector3 vecTargetDelta) {
 			//simple towards target
 			proj.Velocity = vecTargetDelta.normalized * m_muzzleVelocity;
+
+			//also alter rotation
+			proj.transform.rotation = Quaternion.LookRotation(vecTargetDelta);
+
 		}
 
 

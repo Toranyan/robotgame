@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-namespace game.utiliy {
+namespace game.utility {
 
 	public class CObjectSpawner : MonoBehaviour {
 
@@ -16,7 +16,7 @@ namespace game.utiliy {
 		protected float m_spawnRate;
 
 		[SerializeField]
-		protected Vector3 m_spawnVector;
+		protected Vector3 m_spawnVectorRange;
 
 		[SerializeField]
 		protected bool m_enabled;
@@ -43,8 +43,13 @@ namespace game.utiliy {
 		}
 
 		protected void Spawn() {
-			GameObject.Instantiate(m_spawnObject, transform.position, transform.rotation);
-			m_timeElapsedLastSpawn = Time.time;
+			var pos = Vector3.zero;
+			pos.x = Random.Range(-m_spawnVectorRange.x, m_spawnVectorRange.x);
+			pos.y = Random.Range(-m_spawnVectorRange.y, m_spawnVectorRange.y);
+			pos.z = Random.Range(-m_spawnVectorRange.z, m_spawnVectorRange.z);
+			pos += transform.position;
+			GameObject.Instantiate(m_spawnObject, pos, transform.rotation);
+			m_timeElapsedLastSpawn = 0;
 		}
 
 

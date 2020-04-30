@@ -6,11 +6,11 @@ using System.Collections.Generic;
 
 namespace game.ui {
 
+
 	public class CTargetingUI : MonoBehaviour {
 
 		[SerializeField]
 		protected GameObject m_targetSprite;
-
 
 		/****************************************
 		 * Private Fields
