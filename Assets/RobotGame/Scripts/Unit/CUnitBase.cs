@@ -112,7 +112,7 @@ namespace game.unit {
 		// Update is called once per frame
 		void Update () {
 			//update target rotation
-			//VecTargetRot = m_vecMove
+			//VecTargetRot = m_vecMove;
 		
 		}
 
@@ -129,10 +129,20 @@ namespace game.unit {
 			Destroy(gameObject);
 		}
 
+		public virtual void SetTargetVec(Vector3 vec)
+		{
+
+		}
+
 		protected void FixedUpdate() {
 			//movement
 			Rigidbody.AddForce(m_vecMove * m_thrust);
 
+			UpdateRotation();
+		}
+
+		protected virtual void UpdateRotation()
+		{
 			//turn to rot
 			/*
 			Vector3 vecRot = VecTargetRot - transform.rotation.eulerAngles;
@@ -142,27 +152,17 @@ namespace game.unit {
 			*/
 
 			//rotate using a direct rotation
-
-
-			if(VecMove.magnitude > 0.1f) {
+			if (VecMove.magnitude > 0.1f)
+			{
 				float maxRot = m_turnRate * Time.fixedDeltaTime;
 				Transform.rotation = Quaternion.RotateTowards(Transform.rotation, Quaternion.LookRotation(VecMove), maxRot);
 			}
-			//Vector3 rotFinal = Vector3.RotateTowards(Transform.rotation.eulerAngles, VecTargetRot, maxRadians, 1000);
-
+			//Vector3 rotFinal = Vector3.RotateTowards(Transform.rotation.eulerAngles, VecTargetRot, 1, 1000);
 			//Transform.rotation = Quaternion.Euler(rotFinal);
 
 			//m_vecRotForce = vecRot;
-
 			//m_rigidbody.AddTorque(m_vecRotForce * m_turnRate);
-
 		}
-
-
-		public virtual void SetTargetVec(Vector3 vec) {
-			
-		}
-
 
 	}
 

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-
+using System;
 
 namespace game.unit {
 
@@ -13,9 +13,13 @@ namespace game.unit {
 		[SerializeField]
 		protected GameObject m_currentTarget;
 
+		[SerializeField]
+		protected float m_range;
 
 		[SerializeField]
-		protected float m_range; 
+		protected bool m_autoSelectTarget = true;
+
+		public event Action<GameObject> TargetSelected;
 
 		public GameObject CurrentTarget {
 			get { return m_currentTarget; }
@@ -27,15 +31,13 @@ namespace game.unit {
 			set { m_range = value; } 
 		}
 
-
 		public void Update() {
 
-			if(CurrentTarget == null) {
+			if(CurrentTarget == null && m_autoSelectTarget) {
 				//search 
 				//TODO replace with optimized code
 				SelectClosestTarget();
 			}
-
 		}
 
 		public void SelectClosestTarget() {
@@ -58,6 +60,7 @@ namespace game.unit {
 						//replace with new
 						closestDist = dist;
 						CurrentTarget = dest.GameObject;
+						TargetSelected?.Invoke(CurrentTarget);
 					}
 				}
 			}

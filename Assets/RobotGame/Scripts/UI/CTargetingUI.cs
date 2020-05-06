@@ -3,7 +3,6 @@ using System.Collections;
 
 using System.Collections.Generic;
 
-
 namespace game.ui {
 
 
@@ -18,6 +17,7 @@ namespace game.ui {
 
 		protected List<GameObject> m_listTrackedObject = new List<GameObject>();
 
+		
 
 		/****************************************
 		* Public Methods

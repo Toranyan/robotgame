@@ -20,6 +20,9 @@ namespace game.unit {
 		[SerializeField]
 		protected CTargetingController m_targetingController;
 
+		[SerializeField]
+		protected bool m_rotateToTarget;
+
 		/****************************************
 		 * Properties
 		 * **************************************/
@@ -39,13 +42,13 @@ namespace game.unit {
 		 * **************************************/
 
 		public override void Init() {
-
 			base.Init();
 
 			foreach(CWeaponBase wep in m_weapon) {
 				wep.Setup(this);
 			}
 
+			m_targetingController.TargetSelected += OnTargetSelected;
 		}
 
 		//shoot command 
@@ -65,13 +68,8 @@ namespace game.unit {
 
 		//Targeting
 		public virtual void SelectClosestTarget() {
-
 			m_targetingController.SelectClosestTarget();
-
-			foreach(CWeaponBase wep in m_weapon) {
-				wep.Target = m_targetingController.CurrentTarget;
-			}
-
+			UpdateWeaponTarget(m_targetingController.CurrentTarget);
 		}
 
 		public override void SetTargetVec(Vector3 vec) {
@@ -80,6 +78,38 @@ namespace game.unit {
 			foreach(CWeaponBase wep in m_weapon) {
 				wep.TargetVec = vec;
 			}
+		}
+
+		public void UpdateWeaponTarget(GameObject target)
+		{
+			foreach (CWeaponBase wep in m_weapon)
+			{
+				wep.Target = target;
+			}
+		}
+
+		protected override void UpdateRotation()
+		{
+			if (Target != null && m_rotateToTarget)
+			{
+				float maxRot = m_turnRate * Time.fixedDeltaTime;
+
+				Vector3 targetVec = Target.transform.position - transform.position;
+				targetVec.y = 0;
+				targetVec.Normalize();
+
+				Transform.rotation = Quaternion.RotateTowards(Transform.rotation, Quaternion.LookRotation(targetVec), maxRot);
+			} else
+			{
+				//rotate towards movement
+				base.UpdateRotation();
+			}
+
+
+		}
+		protected void OnTargetSelected(GameObject target)
+		{
+			UpdateWeaponTarget(target);
 		}
 
 

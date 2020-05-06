@@ -115,7 +115,6 @@ namespace game.weapon {
 			}
 			newProj.transform.position = spawnPos;
 
-
 			//set target vector
 			Vector3 vecTargetDelta = transform.rotation * Vector3.forward; //default velo is forward
 			if(m_aimEnabled) {
@@ -133,10 +132,8 @@ namespace game.weapon {
 				}
 			}
 
-
 			//rotation
-
-
+			//TODO
 
 			//set projectile target
 			newProj.SetTarget(Target);
